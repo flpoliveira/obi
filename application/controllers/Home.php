@@ -30,8 +30,31 @@ class Home extends CI_Controller {
 		$logged = $this->session->userdata('logado');
 		if(!isset($logged) && !$logged) {
             redirect('login');
-        }
-		$this->load->view('home');
+		}
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		//$this->form_validation->set_rules('aba', 'Abacate', 'required', array('required' => 'O usuario deve ser preenchido'));
+		if ($this->form_validation->run() == FALSE)
+        {
+			
+			
+			$data['ativo'] = 'home';
+			$this->load->model("home_model");
+			$data['modalidade'] = $this->home_model->getModalidade();
+            $this->load->view('header', $data);
+			$this->load->view('home', $data);
+			$this->load->view('footer');
+		}
+		else
+		{
+			var_dump($this->input->post());
+			exit();
+		}
+		
+
+		
+
+		
 
 	}
 
