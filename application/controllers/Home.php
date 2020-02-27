@@ -22,7 +22,7 @@ class Home extends CI_Controller {
     {
     	parent::__construct();
     	
-    	
+    	$this->session->set_flashdata('mensagem', '');
 
     }
 	public function index()
@@ -33,22 +33,55 @@ class Home extends CI_Controller {
 		}
 		$this->load->helper('form');
 		$this->load->library('form_validation');
-		//$this->form_validation->set_rules('aba', 'Abacate', 'required', array('required' => 'O usuario deve ser preenchido'));
+		$this->form_validation->set_rules('ano', 'Ano', 'required', array('required' => 'O ano da prova deve ser preenchido'));
+		$this->form_validation->set_rules('modalidade', 'Modalidade', 'required', array('required' => 'A modalidae da prova deve ser preenchido'));
+
+		$this->load->model("home_model");
 		if ($this->form_validation->run() == FALSE)
         {
 			
 			
 			$data['ativo'] = 'home';
-			$this->load->model("home_model");
+			
 			$data['modalidade'] = $this->home_model->getModalidade();
+			$data['categoria'] = $this->home_model->getCategoria();
+			$data['dificuldade'] = $this->home_model->getDificuldade();
             $this->load->view('header', $data);
 			$this->load->view('home', $data);
 			$this->load->view('footer');
 		}
 		else
 		{
-			var_dump($this->input->post());
-			exit();
+			$prova = $_FILES['arquivo'];
+			$configuracao = array(
+			'upload_path'   => './provas',
+			'allowed_types' => 'pdf',
+			'max_size'      => '500'
+			);      
+			$this->load->library('upload');
+			$this->upload->initialize($configuracao);
+			$this->upload->do_upload('arquivo');
+			$upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+			$nomeProva = $upload_data['file_name'];
+			$configuracao["upload_path"] = "./questoes";
+			$this->upload->initialize($configuracao);
+			$nomeQuestoes = array();
+			for($i = 1; $i <= $this->input->post("gambiarra"); $i++)
+			{
+				if(!($this->input->post('titulo')[$i-1] == ''))
+				{
+					$this->upload->do_upload('inputFileQuestao'.$i);
+					$upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+					array_push($nomeQuestoes, $upload_data['file_name']);
+
+				}
+				
+			}
+			
+			$this->home_model->inserirProva($this->input->post(), $nomeProva, $nomeQuestoes);
+			$this->session->set_flashdata('mensagem', 'Prova e questões cadastradas!');
+			redirect('home');
+			
 		}
 		
 

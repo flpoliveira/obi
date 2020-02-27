@@ -26,4 +26,54 @@
             $this->db->from('modalidades');
             return $this->db->get()->result();
         }
+
+        public function getCategoria(){
+            $this->load->database('default');
+            $this->db->where('ativo', 1);
+            $this->db->from('categorias');
+            return $this->db->get()->result();
+        }
+
+        public function getDificuldade()
+        {
+            $this->load->database('default');
+            $this->db->where('ativo', 1);
+            $this->db->from('dificuldades');
+            return $this->db->get()->result();
+        }
+
+        public function inserirProva($tudo, $nomeProva, $nomeQuestoes)
+        {
+            $this->load->database('default');
+            var_dump($tudo);
+            var_dump($nomeProva);
+            var_dump($nomeQuestoes);
+            $data = array ('nome'=>$nomeProva);
+            $this->db->insert('arquivos', $data);
+            $last_id = $this->db->insert_id();
+            $data = array (
+                'ano' => $tudo['ano'],
+                'descricao' => $tudo['descricao'],
+                'modalidades_id' => $tudo['modalidade'],
+                'arquivos_id' => $last_id
+            );
+            $this->db->insert('provas', $data);
+            $last_id = $this->db->insert_id();
+
+            for($i = 0; $i < count($nomeQuestoes); $i++)
+            {
+                $data = array ('nome'=>$nomeQuestoes[$i]);
+                $this->db->insert('arquivos', $data);
+                $aux = $this->db->insert_id();
+                $data = array(
+                    'titulo' => $tudo['titulo'][$i],
+                    'provas_id' => $last_id,
+                    'categorias_id' => $tudo['categoria'][$i],
+                    'dificuldades_id' => $tudo['dificuldade'][$i],
+                    'arquivos_id' => $aux
+
+                );
+                $this->db->insert('questoes', $data);
+            }
+        }
     }
