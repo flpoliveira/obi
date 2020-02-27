@@ -37,7 +37,7 @@
                 $attributes = array("enctype"=>"multipart/form-data");
                 
                 echo form_open('home/index',$attributes); ?>
-                <?php if($this->session->flashdata("mensagem") != "") echo "<p class='alert alert-success'>".$this->session->flashdata("mensagem")."</p>";?>
+                <?php  echo $this->session->flashdata("mensagem");?>
                 <p class="card-text">
                 <div class="form-group">
                   <label for="anoProva">Ano da Prova</label>

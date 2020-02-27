@@ -22,7 +22,7 @@ class Home extends CI_Controller {
     {
     	parent::__construct();
     	
-    	$this->session->set_flashdata('mensagem', '');
+    	
 
     }
 	public function index()
@@ -79,7 +79,7 @@ class Home extends CI_Controller {
 			}
 			
 			$this->home_model->inserirProva($this->input->post(), $nomeProva, $nomeQuestoes);
-			$this->session->set_flashdata('mensagem', 'Prova e questões cadastradas!');
+			$this->session->set_flashdata('mensagem', '<p class="alert alert-success">Prova e questões cadastradas!</p>');
 			redirect('home');
 			
 		}
