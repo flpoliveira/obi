@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26-Fev-2020 às 23:19
+-- Tempo de geração: 28-Fev-2020 às 04:28
 -- Versão do servidor: 10.4.11-MariaDB
 -- versão do PHP: 7.4.2
 
@@ -30,11 +30,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `arquivos` (
   `id` int(11) NOT NULL,
-  `nome` int(11) NOT NULL,
+  `nome` varchar(255) NOT NULL,
   `dataHoraInsercao` timestamp NOT NULL DEFAULT current_timestamp(),
   `dataHoraAtualizacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `ativo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `arquivos`
+--
+
+INSERT INTO `arquivos` (`id`, `nome`, `dataHoraInsercao`, `dataHoraAtualizacao`, `ativo`) VALUES
+(1, 'ProvaOBI2005Prog1.pdf', '2020-02-28 01:43:03', '2020-02-28 01:43:03', 1),
+(2, 'Campo_de_Minhocas.pdf', '2020-02-28 01:43:03', '2020-02-28 01:43:03', 1),
+(3, 'Duende_Perdido.pdf', '2020-02-28 01:43:03', '2020-02-28 01:43:03', 1),
+(4, 'Frota_de_Táxi.pdf', '2020-02-28 01:43:03', '2020-02-28 01:43:03', 1),
+(5, 'Trilhas.pdf', '2020-02-28 01:43:03', '2020-02-28 01:43:03', 1);
 
 -- --------------------------------------------------------
 
@@ -50,6 +61,15 @@ CREATE TABLE `categorias` (
   `ativo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `categorias`
+--
+
+INSERT INTO `categorias` (`id`, `descricao`, `dataHoraInsercao`, `dataHoraAtualizacao`, `ativo`) VALUES
+(1, 'Gráfos', '2020-02-27 15:34:01', '2020-02-28 01:39:41', 1),
+(2, 'Iniciante', '2020-02-28 01:38:32', '2020-02-28 01:38:32', 1),
+(3, 'Matemática', '2020-02-28 01:40:10', '2020-02-28 01:40:10', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -63,6 +83,14 @@ CREATE TABLE `dificuldades` (
   `dataHoraAtualizacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `ativo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `dificuldades`
+--
+
+INSERT INTO `dificuldades` (`id`, `descricao`, `dataHoraInsercao`, `dataHoraAtualizacao`, `ativo`) VALUES
+(1, 'Fácil', '2020-02-27 15:34:28', '2020-02-28 01:39:28', 1),
+(2, 'Médio', '2020-02-28 01:38:44', '2020-02-28 01:38:44', 1);
 
 -- --------------------------------------------------------
 
@@ -108,6 +136,13 @@ CREATE TABLE `provas` (
   `ativo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `provas`
+--
+
+INSERT INTO `provas` (`id`, `ano`, `descricao`, `modalidades_id`, `arquivos_id`, `dataHoraInsercao`, `dataHoraAtualizacao`, `ativo`) VALUES
+(1, 2005, '', 5, 1, '2020-02-28 01:43:03', '2020-02-28 01:43:03', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -125,6 +160,16 @@ CREATE TABLE `questoes` (
   `dataHoraAtualizacao` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `ativo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `questoes`
+--
+
+INSERT INTO `questoes` (`id`, `titulo`, `provas_id`, `categorias_id`, `dificuldades_id`, `arquivos_id`, `dataHoraInsercao`, `dataHoraAtualizacao`, `ativo`) VALUES
+(1, 'Campo de Minhocas', 1, 2, 2, 2, '2020-02-28 01:43:03', '2020-02-28 01:43:03', 1),
+(2, 'Duende Perdido', 1, 1, 1, 3, '2020-02-28 01:43:03', '2020-02-28 01:43:03', 1),
+(3, 'Frota de Táxi', 1, 2, 1, 4, '2020-02-28 01:43:03', '2020-02-28 01:43:03', 1),
+(4, 'Trilhas', 1, 3, 1, 5, '2020-02-28 01:43:03', '2020-02-28 01:43:03', 1);
 
 --
 -- Índices para tabelas despejadas
@@ -180,19 +225,19 @@ ALTER TABLE `questoes`
 -- AUTO_INCREMENT de tabela `arquivos`
 --
 ALTER TABLE `arquivos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `dificuldades`
 --
 ALTER TABLE `dificuldades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `modalidades`
@@ -204,13 +249,13 @@ ALTER TABLE `modalidades`
 -- AUTO_INCREMENT de tabela `provas`
 --
 ALTER TABLE `provas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `questoes`
 --
 ALTER TABLE `questoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restrições para despejos de tabelas
