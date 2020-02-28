@@ -34,6 +34,14 @@
             return $this->db->get()->result();
         }
 
+        public function getAno()
+        {
+            $this->load->database('default');
+            $this->db->where('ativo', 1);
+            $this->db->from('provas');
+            return $this->db->get()->result();
+        }
+
         public function getDificuldade()
         {
             $this->load->database('default');

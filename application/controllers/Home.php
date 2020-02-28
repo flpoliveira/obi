@@ -22,15 +22,15 @@ class Home extends CI_Controller {
     {
     	parent::__construct();
     	
-    	
+    	$logged = $this->session->userdata('logado');
+		if(!isset($logged) && !$logged) {
+            redirect('login');
+		}
 
     }
 	public function index()
 	{
-		$logged = $this->session->userdata('logado');
-		if(!isset($logged) && !$logged) {
-            redirect('login');
-		}
+		
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('ano', 'Ano', 'required', array('required' => 'O ano da prova deve ser preenchido'));

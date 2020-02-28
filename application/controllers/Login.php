@@ -61,8 +61,8 @@ class Login extends CI_Controller {
 
 	public function sair()
 	{
-        $this->session->set_userdata(array('logado' => FALSE));
+        $this->session->unset_userdata('logado');
         $this->session->set_flashdata('mensagem', 'Você saiu!');
-        redirect();
+        redirect('login');
 	}
 }
