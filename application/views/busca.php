@@ -114,10 +114,11 @@
         <?php if(isset($resultado))
         {
         ?>
-          <div class="row"><div class="col-sm-12">
-            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                <thead>
-                <tr role="row">
+          <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-bordered table-hover dataTable" role="grid">
+                    <thead>
+                        <tr role="row">
                             <th> Ano </th>
                             <th> Modalidade </th>
                             <th> Arquivo da Prova </th>
@@ -125,13 +126,12 @@
                             <th> Categoria </th>
                             <th> Dificuldade </th>
                             <th> Arquivo da Questão </th>
-                </thead>
-                <tbody> 
-                    <?php foreach($resultado as $key)
-                    {
-                    ?>            
-                        <tr role="row" class="odd">
-                            
+                    </thead>
+                    <tbody> 
+                        <?php foreach($resultado as $key)
+                        {
+                        ?>            
+                            <tr role="row" class="odd">
                                 <td><?php echo $key->ano; ?></td>
                                 <td><?php echo $key->modalidade; ?></td>
                                 <td><a href='<?php echo base_url("./provas/".$key->arquivoProva); ?>' target='_blank'>Link</a></td>
@@ -139,16 +139,16 @@
                                 <td><?php echo $key->categoria; ?></td>
                                 <td><?php echo $key->dificuldade; ?></td>
                                 <td><a href='<?php echo base_url("./questoes/".$key->arquivoQuestao); ?>' target='_blank'>Link</a></td>
-                                
-                        
-                        </tr>
-                    <?php
-                    }
-                    ?>
-                </tbody>
-                <tfoot>
-                </tfoot>
-              </table></div></div>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+              </div>
+            </div>
         <?php 
         }
         ?>

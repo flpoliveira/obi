@@ -28,6 +28,9 @@
                 if($tudo['categoria'])
                     $this->db->where('questoes.categorias_id', $tudo['categoria']);
             }
+            $this->db->where('provas.ativo', 1);
+            $this->db->where('questoes.ativo', 1);
+            $this->db->where('arquivos.ativo', 1);
             
             $this->db->order_by('provas.ano', 'ASC');
             return $this->db->get()->result();
